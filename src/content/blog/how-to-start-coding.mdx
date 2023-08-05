@@ -1,0 +1,131 @@
+---
+title: 'How to start coding'
+description: 'I am no expert in coding, but I have spent a significant amount of time starting to learn to code, so I feel my perspective may be of value to someone.'
+pubDate: '2023-6-14'
+heroImage: 'https://images.unsplash.com/photo-1562516155-e0c1ee44059b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2064&q=80'
+draft: false
+---
+
+import Anchor from '../../components/Anchor.astro';
+
+I am no expert in coding, but I have spent a significant amount of time *starting* to learn to code, so I feel my perspective may be of value to someone.
+
+## <Anchor id="what-do-i-need" /> What do I need?
+
+It is often said that for programming, you don't need a powerful computer, and while I agree to an extent, I think there is some nuance to that sentiment. But for the most part, all you need to code is a computer, a text editor, and an internet connection.
+
+---
+
+### <Anchor id="hardware" /> Hardware
+
+Any computer will do. Really you can code on anything, even a phone if needed. But if your budget allows for you to have a *little* bit of choice, I have formed some opinions over the years that may be helpful to you.
+
+#### <Anchor id="apple-computers" /> Apple Computers
+
+Macbooks seem to be pretty popular in the space of web development, and I can see why. They have excellent battery life (particularly the M series chips), they support most software you would ever need run for web development, easy access to a Unix-type shell, and they pack a decent punch as far as performance goes. However, new Macbooks will cost a you a pretty penny and its quite honestly a bit of an overkill for web development. If you have an affinity for Apple products and you have the budget for it, go for it. Used or refurbished Macbooks are available and can be found at reasonable prices for models that are several years old, but you are still sinking quite a bit of cost into some significantly aged hardware, so do your research and buy at your own risk.
+
+##### Pros:
+<span class="pros">
+- Battery life
+- Software support
+- Unix shell
+- Performance
+</span>
+##### Cons:
+<span class="cons">
+- Expensive
+</span>
+
+#### <Anchor id="windows-computer" /> Windows Computers
+
+Desktop and laptop computers come in all shapes, sizes, budgets, and capabilities. If you want to get a computer that runs Windows, first decide if you want a laptop setup or a desktop setup, then start looking for a PC that fits your budget and needs. If you are going the desktop route, I highly recommend spending the time to research how to build a computer and buy the parts individually. This approach will almost always yield a far better value, better likelihood of upgradability, and a good chance you walk away with a much better idea of how your computer works or more importantly how to fix it when it doesn't. 
+
+If you would rather lounge on the couch with a laptop to do your coding (which is the way to go in my opinion) there is a wide range of Windows laptops on the market. You'll want to consider screen size, battery life, weight (if you plan on carrying it around often), and power. As I said previously, you will often hear people claim that you do not need a powerful computer to code, and that is very true, but there is a wealth of laptops on the market that are sub $200 (USD) that are sporting Intel Celeron chips. Don't get me wrong, this computers definitely have a right to exist, as they get fantastic battery life, and can be a perfect fit for a certain use case. But if you are planning to spend a significant amount of time with this machine, the performance will slowly eat away at your sanity. At the very least, I'd recommend something with a Pentium processor, but if at all possible, opt for a unit with an i3 or a Ryzen 3, and preferably a chip that is less than 5 years old. I'd say 8gb of ram is the minimum as you will likely be running a good amount of tabs in your browser 4gb will get consumed very quickly. Any amount of storage will suffice, and laptops typically do not solder the SSD to the boards, so upgrading is always an option down the line.
+
+As far as software on Windows, this is a bit of hot topic. Windows is the most used desktop operating system worldwide. But does that make it the best operating system for development? There are certainly arguments for and against it. You do have access to software suites such as Adobe Creative Cloud which will come in handy for creating professional graphics for you projects, and Visual Studio Code (VSCode) is owned by Microsoft, so it works seamlessly on Windows. But it is generally recognized that the Windows shell is a bit of a hindrance when it comes to software development. It certainly has its advocates and people will claim it is fully capable. But I have found that most guides and tutorials assume that you are working on Linux or MacOS and present their instructions accordingly. You can run Windows Subsystem for Linux (WSL), but that has its downfalls as well. We'll get more into software below, but I wanted to mention it here as it might guide your decision in purchasing a certain piece of hardware. Just know, that for most Windows laptops, it is usually quite easy to install Linux as an alternative to Windows.
+
+##### Pros:
+<span class="pros">
+- Wide range of devices
+- Upgradability
+- Budget friendly
+</span>
+##### Cons:
+<span class="cons">
+- Potentially bad hardware
+</span>
+
+#### <Anchor id="chromebooks" /> Chromebooks
+Now hear me out, if you need an extremely low cost device that will get you though the very basics, a chromebook will certainly suffice. As with Windows laptops, there are several very cheap devices with Celeron processors that I would steer clear of. Try to find one with a Pentium or better. Within the chromebook, you can use browser based text editors or IDE's or you can use the Linux Subsystem within ChromeOS (which in my opinion is much easier to handle than WSL) and install native Linux applications(including Visual Studio Code). While most chromebooks will be quite capable for introductory level coding as far hardware goes, you will start to notice it slowing down if you are running even slightly demanding processes, so I would only recommend a chromebook for those on the tightest of budgets.
+
+There is *one* issue that I have found with chromebooks that really shouldn't be a problem, **the keyboard layout**. Chromebooks have a custom layout that is only slightly different from standard keyboards. For the average user just browsing the web, its probably not even noticeable, but in a world where keybindings and shortcuts are crucial to an effective workflow, it really gets in the way. The chromebook keyboard does not have the usual "meta" key or "Windows" key that typical keyboards have, instead it has a "search" key that rests in the place typically taken by the "CapsLock" key. They also don't have an "F" row, which is actually typical for laptop keyboards, expect that most laptops have a "Fn" that allows you to access the function keys that share a space with another set of operations. Granted, many of the keys that you may need that aren't immediately present on the keyboard are accessible via some key combination,but you will have to google them and you'll likely never remember them. This really gets in the way with applications like VSCode that have numerous shortcuts that conflict with the chromebook keyboard layout, and adjusting the shortcuts as a work around will drive you mad.
+
+##### Pros:
+<span class="pros">
+- Affordable
+- Sufficient for basic coding
+- Native Linux Apps
+</span>
+##### Cons:
+<span class="cons">
+- Under powered hardware
+- Poor keyboard layout
+</span>
+
+---
+
+### <Anchor id="software" /> Software
+As a huge surprise to no one, software is very important to writing software. Which software you choose may be dictated by what you are coding. For the most part, game developers tend to stick to Windows, developers developing software for Windows likely code in Windows, but all other developers seem to lean more towards MacOS or Linux. I believe that those who need to use Windows will use Windows, and there are a handful of people who will choose to use Windows and likely use WSL because they prefer that workflow. Admittedly I do not have any experience with MacOS, so my subjective opinion of the workflow on MacOS is moot. That said, I'll spend the next few paragraphs trying to convince you to use Linux. Note that I understand why one might prefer MacOS, I just don't have the experience to fairly represent it.
+
+#### <Anchor id="a-case-for-linux" /> *A Case for Linux*
+Most people are quite comfortable using a Windows machine. It's also quite simple to spin up VSCode and churn out some HTML, CSS and even some JavaScript. But in my opinion, when it comes to coding, Linux is far superior.
+
+As I've mentioned, most guides and tutorials assume that you are using MacOS or Linux, this isn't coincidence. Linux and MacOS both use a Unix-like shell. That means that basic commands in the terminal are universal between MacOS and Linux systems. It is very important to be familiar with the terminal because even if you choose to work on a Windows machine, if you ever plan to do any work with a sever, and you will, you will have to know your way around a Unix-like shell. Using Linux as your main system allows you to get comfortable with the command line just doing regular tasks on your computer.
+
+One thing Linux has over MacOS is that it is free. Free as in open source. This means that while it is true it does not cost anything, more importantly, you are free to do with it what you please. Because of this, Linux comes in the form of countless distributions, you can use any desktop environment or window manager you choose. You can tailor and tweak your system however you see fit. You can install a distribution that is known for stability, and expect it to just work right out of the box and stay out of your way, or you can install a form of Linux that lets you tweak every aspect of it. You can dive into configuration files (also called dotfiles) and fine tune your setup to your exact preference. The important part is that you have the choice to use your system how you please.
+
+#### <Anchor id="text-editor-ide" /> Text Editor/IDE
+The pedantic will pounce on the misuse of the terms text editor or IDE, but from what I have gathered, most all modern text editors can essentially be modified to qualify as a functioning IDE. An IDE is an Integrated Development Environment and it handles everything you need to write and compile software. For writing simple code in JavaScript, you can simply write to a text document, run it in your browser and see the results. Other languages are not that simple and must be compiled in order to run. An IDE will provide you with the tools to write, compile, run, and debug your code. VSCode is considered a text editor, but with a handful of plugins it can essentially function just like an IDE. So I would wager to say that here in the year 2023, text editors and IDE's are mostly synonymous.
+
+Most introductory guides will lead you to VSCode to start your coding journey. And they are not wrong. It is dead simple to navigate and it really stays out of the way when trying to learn the basics. But I would urge you to explore options outside of VSCode early on, as you may find that other options may be far more fun and effective to use. The bit of software I'm alluding to is NeoVim.
+
+#### <Anchor id="a-case-for-neovim" /> *A Case for NeoVim*
+The beauty and potential of NeoVim deserves it's own article, NeoVim is a terminal based text editor which is a rewrite of the Vim text editor which was born out of a program called Vi. I won't go into a thorough history lesson of Vi and Vim, but know that the "movements" as they are referred to have been around for a long time. NeoVim brings Vi and Vim into the modern world by using a modern programming language (Lua) to allow for robust configurations and plugin support. Where VSCode users often use their mouse to navigate their document and the text editor itself, Vim focuses on keeping your hands on the keyboard and allows you to navigate through a series of keyboard shortcuts. There is obviously a bit of a learning curve and a lot of memorization, but the benefits quickly become apparent.
+
+Keyboard movements aside, I have found one of the major benefits of using NeoVim is that I am learning how software works. I do not get the luxury of an IDE to add a layer of abstraction when it comes to compiling and debugging. This is extremely valuable especially when you are first learning. 
+
+And of course, the greatest and most important reason you should use Linux and NeoVim is the ricing. You can make your setup up look *so* cool. Why wouldn't you want to use them?
+
+---
+
+## <Anchor id="resources" /> Resources
+Now that you have settled into a computer, operating system, and a text editor, its time to actually start learning. Personally I started learning HTML and CSS in high school using W3Schools, and though I think it did give me a bit of an advantage when returning to coding much later in life, I don't really recommend using W3Schools now. I've also dabbled with Codecademy here and there, but I never really found that information to stick. There is one resource that I feel has nearly perfected the introductory level lesson plan for web development, that is [The Odin Project](https://theodinproject.com).
+
+### <Anchor id="theodinproject" /> The Odin Project
+In this post I have expressed my opinion on various tools and have provided insight on selecting the tools for your needs, but I haven't walked you through how to code. Platforms like Codecademy will take you into a lesson and provide all the tools you need to get directly into the code. Which can be great, but it also means that you can walk away from a full lesson and not know how to actually produce anything useful. The Odin Project takes a wildly different approach in that it starts with walking you through the steps of building out a proper development environment, including installing a text editor, installing Node.js and npm (both very important for modern web development), and Git. The decision to incorporate Git from the very start I believe is extremely wise. Learning and using Git is a crucial part of any personal and professional workflow, and I really can't understand why other educational platforms do not start their students with a Git workflow right off that bat. 
+
+After your development environment is set up, The Odin Project (TOP) will get you started with the basics of HTML. In the early courses there is quite a bit of hand holding, and it really takes you through every detail. But as the course progresses, TOP takes on a philosophy of promoting self-study. They encourage you to read articles and documentation from outside sources. The course goes on to cover the basics of CSS and introductory level JavaScript.
+
+Once you complete the foundations, you are presented with a choice to pursue full stack development via Ruby on Rails or JavaScript. Some would say that Ruby on Rails is fading out of relevance, but if you choose to take that route, you would not be wasting your time as the concepts covered in the courses can easily be carried on to other technologies. 
+
+The Odin Project is open source, so the community feeds back into the course and constantly improves it. I consider TOP to be the gold standard for learning material in the web development space.
+
+### <Anchor id="full-stack-open" /> Full Stack Open
+
+[Fullstackopen.com](https://fullstackopen.com/en/) is another open source course that will take you from no knowledge of coding to a your first job interview. Full stack open is actually unique in that if you complete all the assignments and submit them for grading, you can actually receive college credits for the course.
+
+Full Stack Open briefly covers HTML, CSS and basic JavaScript but then quickly dives into the frameworks Express.js and React.js. 
+
+I think full stack open is a great and thorough resource, but personally the flow of the course did not resonate with me.
+
+### <Anchor id="formal-education" /> Formal Education
+
+I'm really not in a position to make this statement as I do not have nor have I ever held a job in tech, but there seems to be a growing sentiment that you do not need a degree to get hired as a software engineer. I have never been a fan of academia, but I do see the value in formal education. As of this writing, I am attending university to get an associates degree in web development. I had the opportunity to attend school completely free, so I took it. However, I don't believe that the value of a formal education is proportional to its cost. And I'm speaking specifically to the web development and software engineering sector. If you have to take out a student loan to attend university, I would highly recommend considering the self-taught route.
+
+My experience in formal education is that the content is usually slightly out of date and there is a lot of tedious work. I do enjoy interacted with the professors and other students, and I believe there is a lot of value in that. As others have observed though, university isn't necessarily meant to teach you everything about a given subject, but rather it is meant to teach you how to learn.
+
+---
+
+## <Anchor id="conclusion" /> Conclusion
+
+There will always be debate about whether it is a good time to get into tech or if companies are hiring coders. This should not be a consideration when deciding whether or not to learn to code, because there will always be times when companies are hiring and when they aren't. If you only decide to learn to code at a time when companies are hiring, who knows if they will be hiring by the time you are hire-able. *Right now* will **always** be the best time to start learning.
