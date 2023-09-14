@@ -1,0 +1,23 @@
+---
+title: 'Installing WSL'
+description: 'A thorough guide to installing and cutomizing WSL on Windows 10 and Windows 11'
+pubDate: '2023-9-13'
+heroImage: '/wsl_bliss.png'
+draft: true
+---
+
+import Anchor from '../../components/Anchor.astro';
+
+There is nothing better than kicking back with a nice Thinkpad running Linux on hard metal. However, I understand some people may want to take a softer approach when experimenting with Linux. Fortunately, Windows has a solution that lets us experience some of the greater parts of Linux without having a huge impact on your current system.
+
+There are countless guides out there that explain how to install WSL and plenty of guides out there about getting started with Linux. My goal for this article, though, is to walk you through the WSL setup, take you straight to an Arch Linux instance, and get you running with a cutting-edge, fully customized system. We will be learning about various package managers (and a particular package manager wrapper), we will be digging into config file, we will learn about some basic Linux file system structures, and more. I'll talk about Ubuntu, but we won't be using it. I'll include some background on some of the topics, but I won't go too much into details (I'll let you know if you should google something).
+
+# <Anchor id="what-is-wsl" />What is WSL?
+
+Google it.
+
+I'm kidding. WSL simply means "Windows Subsystem for Linux." It is essentially running Linux in a virtual machine, just a little more streamlined. For one, the file system integrates with Windows file system seamlessly. While it is possible to run GUI (Graphical User Interface) apps with WSL, we will not be doing so in this guide. Everything will be entirely in the terminal, that is after WSL is installed.
+
+If you are interested in more details about WSL and how it differs from classic Virtual Machines it is worth a google search. Windows has [ comprehensive documentation ](https://learn.microsoft.com/en-us/windows/wsl/) on WSL, including a nice install guide with some tutorials if you prefer something more formal than what I will have here.
+
+
