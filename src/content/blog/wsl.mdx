@@ -54,7 +54,47 @@ So you've installed WSL via that command line (`wsl --install`). Now to install 
 
 ## <Anchor id="pacman" /> Pacman
 
+Now that you have a fresh install of Arch Linux, its time to get some things installed.
+
+When you read guides for linux online, you'll often see commands that involve `apt` or `sudo apt` or possibly even `apt-get`. These commands are associated with the APT package manager. APT is the package manager used by Debian based distro, so by extension, APT is used by the ever popular Ubuntu. Since we are not using Ubuntu (or more specifically a Debian-based distro) we cannot use APT. Arch uses a package manager called Pacman. So, where on you Debian (or Ubuntu) you would use 
+
+```
+sudo apt install <package_name>
+```
+
+on Arch we will use
+
+```
+sudo pacman -S <package_name>
+```
+
+(`sudo` is actually its own program that allows us to run commands as the super user without explicitly switching to the super user. It is unrelated to package manager and you will see it used in conjunction with a wide variety of commands. Anytime you run a command with `sudo` within a session, you will be prompted to input the password you chose when setting up the system. It is worth noting that when you input the password at this prompt, no placeholder characters are displayed, so it will appear as if you are not typing anything.)
+
+If you don't know the specific name of the package you are trying to install, you may used
+
+```
+pacman -Ss <package_keyword>
+```
+
+which should return a list of packages with the search terms either in the title or the description of the packages.
+
+Pacman is also used to update the system and all the packages you have installed. To do so use
+
+```
+sudo pacman -Syu
+```
+
+If you are running into errors with a mention of "invalid or corrupted package (PGP signature)" you will need to run
+
+```
+sudo pacman -S archlinux-keyring
+```
+
+You should be all set to start installing software.
+
 ## <Anchor id="zsh" /> ZSH
+
+Now I want to start getting you set up with some 
 
 ## <Anchor id="dependencies" /> Dependencies
 
