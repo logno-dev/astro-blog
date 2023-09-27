@@ -20,4 +20,42 @@ I'm kidding. WSL simply means "Windows Subsystem for Linux." It is essentially r
 
 If you are interested in more details about WSL and how it differs from classic Virtual Machines it is worth a google search. Windows has [ comprehensive documentation ](https://learn.microsoft.com/en-us/windows/wsl/) on WSL, including a nice install guide with some tutorials if you prefer something more formal than what I will have here.
 
+# <Anchor id="requirements" />Requirements
 
+If it isn't obvious, you will need a system with Windows on it. Either Windows 10 or 11. As far as hardware, you can likely run WSL on any relatively modern machine. If you plan to run several browser tabs, edit some videos, or run some vector art software while running WSL, you may want a bit more memory and compute power.
+
+## <Anchor id="virtualization" />Virtualization
+
+Now according to Microsofts docs, running the install command is supposed to enable all the settings needed to run WSL. That has not been my experience. What the Microsoft documentation seems to fail to mention, is that hardware virtualization needs to be enabled in the systems BIOS in order to run WSL. Perhaps newer motherboards enable virtualization by default and Microsoft didn't feel the need to mention it in their docs. However, if you enable all other settings, and it still is not working, you may need to enable virtualization in the BIOS. To do that, you will have to look up the instructions for your specific motherboard/device.
+
+You may also need to manually enable Hyper-V. To do this, you can pop open your start menu and start typing "Turn on" and app should pop up that says "Turn Windows features on or off." Open that up and look for the item labeled "Hyper-V" and check the box. Click okay and when prompted let the app restart your system.
+
+If you've successfully completed those two things, you shouldn't have any problems moving on to the actual install.
+
+# <Anchor id="install" />Install
+
+There are a couple of approaches you can take at this point. If you wish to grasp on to any GUI you can get, you can open up the Microsoft app store, search for WSL. Navigate to the page for the app and click get. Or if you prefer to condition yourself for the command line, you can open up Windows PowerShell and type the command `wsl --install`. Both of these methods should get you to the same place. You should have the Linux environment ready to roll. But you still need to choose a distro to run in WSL. Again this can be done either in the app store or the command line. In the app store, back at the WSL search, you will see several apps representing the various available distro's. The one I am going to point you to is Arch.
+
+## <Anchor id="arch" />Arch Linux
+
+If you are at all familiar with the Linux community, you may know that Arch has a bit of a reputation. But I assure you, the reason I'm using it here is for simplicity, which may seem counter-intuitive to those with experience with Arch Linux.
+
+Ubuntu has long been the go-to distro for those just entering the Linux world. It is a solid distribution that has been around for ages, and it has a huge community as well as a well funded company backing it. When you need to install Linux onto a computer, chances are if you try to install Ubuntu, it will just work. You will not likely run into a situation where a wrong click will bring your whole OS down. This is partly due to the way Ubuntu handles packages. A lot of what distinguishes distros from each other is their package manager and their respective package repositories. Distributions like Ubuntu spend a lot of time making sure that every package available to you via their package manager should work with your system without conflicting with anything. That means that when you download an app through their package manager, you are likely downloading a version that is several versions behind the most recent version. This isn't always a bad thing, many apps add very few needed features with subsequent updates, and the more popular apps are usually tested and pushed to the repository in a timely manner. But there are a ton of apps that move extremely quickly, and the good folks at Ubuntu just can't keep up. Which results in a lot of apps recommending installing without using your distro's package manager.
+
+So just to recap. People use Ubuntu because it is stable. It is stable (partly) because it uses well tested software. We still want the newest software. We bypass the very thing that makes Ubuntu stable.
+
+So is there a distro that just uses that newest software all the time? Of course! There is a whole spectrum of distro's with various levels of stability vs modernity. Arch Linux is on that far end of the spectrum utilizing the newest and greatest versions of software nearly immediately when they become available. If you are looking for a middle ground, a distro like Fedora is a great compromise. Fedora is a fantastic balance of stability with up to date packages.
+
+Arch, however, does not have a reputation of simplicity. It's installation process is usually its biggest hurdle. It does not ship with a graphical installer and settings are generally entered manually. It is a grueling process, but it yields an intimate understanding of your system, and allows you take complete control of your OS. But that is not what I am here to walk you through. I am not trying to sell you on installing Arch on bare metal, I only want you to have easy access to the latest and greatest software.
+
+So Ubuntu is simple and sturdy, but getting the newest software introduces its own form of complexity. Arch is complex and unstable, but getting the newest software is simple. Fortunately, WSL makes this decision an easy one. Installation and setup of Arch is taken care of for you. Stability isn't much of an issue, because it is just a virtual machine where all the files are accessible through the Windows file system. If you need to wipe the system, no loss, just grab what you need first.
+
+So you've installed WSL via that command line (`wsl --install`). Now to install Arch Linux, head to the Microsoft app store and search "Arch" or "Linux" or "WSL" or any combination of those key words. Skim the results until you find the "Arch Linux" WSL package. Click "GET" and let it do its thing. You can now launch Arch Linux as any other app on your computer via the Start menu or create a desktop shortcut if you wish. It will launch a command line window and the first launch will prompt you to set a user and a password for your virtual Linux system. I would also recommend downloading "Windows Terminal" from the Microsoft Store as it offers more features and is just a bit more modern than the default command line window.
+
+## <Anchor id="pacman" /> Pacman
+
+## <Anchor id="zsh" /> ZSH
+
+## <Anchor id="dependencies" /> Dependencies
+
+## <Anchor id="lazyvim" /> LazyVim
