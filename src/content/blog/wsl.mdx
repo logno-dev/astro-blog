@@ -1,9 +1,9 @@
 ---
 title: 'Installing WSL'
 description: 'A thorough guide to installing and cutomizing WSL on Windows 10 and Windows 11'
-pubDate: '2023-9-13'
+pubDate: '2023-9-29'
 heroImage: '/wsl_bliss.png'
-draft: true
+draft: false
 ---
 
 import Anchor from '../../components/Anchor.astro';
@@ -28,13 +28,13 @@ If it isn't obvious, you will need a system with Windows on it. Either Windows 1
 
 Now according to Microsofts docs, running the install command is supposed to enable all the settings needed to run WSL. That has not been my experience. What the Microsoft documentation seems to fail to mention, is that hardware virtualization needs to be enabled in the systems BIOS in order to run WSL. Perhaps newer motherboards enable virtualization by default and Microsoft didn't feel the need to mention it in their docs. However, if you enable all other settings, and it still is not working, you may need to enable virtualization in the BIOS. To do that, you will have to look up the instructions for your specific motherboard/device.
 
-You may also need to manually enable Hyper-V. To do this, you can pop open your start menu and start typing "Turn on" and app should pop up that says "Turn Windows features on or off." Open that up and look for the item labeled "Hyper-V" and check the box. Click okay and when prompted let the app restart your system.
+You may also need to manually enable Hyper-V. To do this, you can pop open your start menu and start typing "Turn on" and an app should pop up that says "Turn Windows features on or off." Open that up and look for the item labeled "Hyper-V" and check the box. Click okay and when prompted let the app restart your system.
 
 If you've successfully completed those two things, you shouldn't have any problems moving on to the actual install.
 
 # <Anchor id="install" />Install
 
-There are a couple of approaches you can take at this point. If you wish to grasp on to any GUI you can get, you can open up the Microsoft app store, search for WSL. Navigate to the page for the app and click get. Or if you prefer to condition yourself for the command line, you can open up Windows PowerShell and type the command `wsl --install`. Both of these methods should get you to the same place. You should have the Linux environment ready to roll. But you still need to choose a distro to run in WSL. Again this can be done either in the app store or the command line. In the app store, back at the WSL search, you will see several apps representing the various available distro's. The one I am going to point you to is Arch.
+There are a couple of approaches you can take at this point. If you wish to grasp on to any GUI you can get, you can open up the Microsoft app store, search for WSL. Navigate to the page for the app and click "GET". Or if you prefer to condition yourself for the command line, you can open up Windows PowerShell and type the command `wsl --install`. Both of these methods should get you to the same place. You should have the Linux environment ready to roll. But you still need to choose a distro to run in WSL. Again this can be done either in the app store or the command line. In the app store, back at the WSL search, you will see several apps representing the various available distro's. The one I am going to point you to is Arch.
 
 ## <Anchor id="arch" />Arch Linux
 
@@ -68,9 +68,9 @@ on Arch we will use
 sudo pacman -S <package_name>
 ```
 
-(`sudo` is actually its own program that allows us to run commands as the super user without explicitly switching to the super user. It is unrelated to package manager and you will see it used in conjunction with a wide variety of commands. Anytime you run a command with `sudo` within a session, you will be prompted to input the password you chose when setting up the system. It is worth noting that when you input the password at this prompt, no placeholder characters are displayed, so it will appear as if you are not typing anything.)
+(`sudo` is actually its own program that allows us to run commands as the super user without explicitly switching to the super user. It is unrelated to the package manager and you will see it used in conjunction with a wide variety of commands. Anytime you run a command with `sudo` within a session, you will be prompted to input the password you chose when setting up the system. It is worth noting that when you input the password at this prompt, no placeholder characters are displayed, so it will appear as if you are not typing anything.)
 
-If you don't know the specific name of the package you are trying to install, you may used
+If you don't know the specific name of the package you are trying to install, you may use
 
 ```
 pacman -Ss <package_keyword>
@@ -90,12 +90,152 @@ If you are running into errors with a mention of "invalid or corrupted package (
 sudo pacman -S archlinux-keyring
 ```
 
+### <Anchor id="yay" /> Yay
+
+This portion is entirely unnecessary, and many will advice against this entirely, but I like to use a bit of software called Yay. Yay is what is known as a AUR helper program, and it's purpose is to make it a little easier to install packages that reside in the Arch User Repository (AUR). The AUR is a community-driven repository that allows users to build packages from the source and then install it via pacman. AUR helpers like Yay take care of all that for you and allow you to install packages from the AUR as if they were regular packages in the official Arch repository. To install Yay, run 
+
+```
+sudo pacman -S yay
+```
+
+Now every command you would pass to `pacman` you can now pass to `yay` but you can omit a few things like `sudo`. If yay needs super user privileges for its operations it will ask you. Also, to search a package before installing it you can simply run
+
+```
+yay <keyword>
+```
+
+Then you can select the package to install by choosing the associated number.
+
+Yay can also be used to update the system by simply running
+
+```
+yay
+```
+
+---
+
 You should be all set to start installing software.
 
 ## <Anchor id="zsh" /> ZSH
 
-Now I want to start getting you set up with some 
+Now I want to start getting you set up with some of the more exciting software. By default, the Linux command line runs a program called Bash. If you fiddle around with Linux enough, you'll notice the term "shell" being used for several different things that seem somewhat unrelated. One such thing is the Linux command line environment. Without going into to much detail, the "sh" in Bash is short for "shell" and Bash is just certain flavor of the shell. It's essentially the programming language used to interact with the Linux system via command line. Being the default on nearly all Linux distros, Bash is arguably the most popular shell. And it is really powerful. But there are alternatives that have just a few more features. ZSH is one such alternative.
+
+So lets install ZSH
+
+```
+yay zsh
+```
+
+You'll get a huge list of packages, but the one you want is number 1 so you can simply hit "Enter" to select it. Hit "Enter" at the next two prompts and let it install. It will likely ask for your root password, input your password and hit enter.
+
+Now we will install an overkill of a plugin system called Oh My Zsh. Run
+
+```
+yay oh-my-zsh-git
+```
+
+And again, install the first package.
+
+Now we want to make Zsh our default shell by running
+
+```
+chsh -s $(which zsh)
+```
+
+Now when you open the Arch Linux instance, you will automatically load into zsh. We will get into some further customization with zsh a little later. For now, lets get some other things setup.
 
 ## <Anchor id="dependencies" /> Dependencies
 
+I'm going to get you set with the best text editor of all time, but before we do that, there are a few things we want to install first, just to make things go a little smoother.
+
+Run the following command to install these packages
+
+```
+yay -S nodejs npm lazygit ripgrep fd neovim
+```
+
+This will install Node.js, Npm (the Node.js package manager), and a few other tools that will make things just a little fancier. That last one, neovim, is a big one. But as it is, you wont find it much fun. We'll fix that.
+
 ## <Anchor id="lazyvim" /> LazyVim
+
+As stated earlier, NeoVim **IS** the greatest text editor ever. But on its own, it can feel a bit barren. Part of what makes it so great though, is its ability to be sculpted and crafted to our specific needs. Now diving straight into the configs and building out your own setup can be quite the barrier. If you are up for the task, I highly recommend seeking out one of the many guides and doing so. But I understand most rational people will opt to bypass that process. For those individuals, there are NeoVim distros. Similar to Linux distros, NeoVim distros build upon the glory of the base program and provide a fully developed configuration. You still have the option to expand upon them and change options to your liking, but they deliver quite a pleasant experience out of the box. There are several options that you can look into, such as NvChad, kickstart.nvim, and LunarVim. LunarVim is an excellent option for beginners as it is quite a comprehensive distro with most everything you would ever want. NvChad may require a little more tweaking, and kickstart.nvim is more of just a scaffolding for you to build your own config out of. But today we are going to install LazyVim, which is a distro built on the latest and greatest lazy.nvim plugin manager. So lets get straight into it. Run
+
+```
+git clone https://github.com/LazyVim/starter ~/.config/nvim
+```
+
+Then run
+
+```
+rm -rf ~/.config/nvim/.git
+```
+
+And you are all set! Open it up by running
+
+```
+nvim
+```
+
+The first time starting it up, it will install a bunch of stuff. It shouldn't take long, and you should soon be presented with the LazyVim landing screen. If you are not familiar with Vim and Vim motions, before you touch **anything** type `:Tutor` and follow the instructions given to you. Run through it a few times if you need to. Get the basics down and then move on. As times go on, you may want to revisit it and refresh your memory on some of the lesser used functions. 
+
+Since you are using LazyVim and not just NeoVim, you have so preset shortcut keys. You can get a menu of some of them by pressing the spacebar (commonly referred to as the \<leader\> key). For a quick reference of the shortcuts [head over to the docs](https://www.lazyvim.org/keymaps).
+
+One tool you should be familiar with is `:Mason`. This will let you browse a list of LSP (language server protocols) among other things and install them with a single keystroke. If you aren't familiar with LSP's, they are the tools that provide text editors with hints and autofill options. The same LSP's that VSCode uses are available in NeoVim, you've just got to find them and install them.
+
+## <Anchor id="final-touches" />Final Touches
+
+So now we have a proper text editor fully configured and ready to edit some text. We also have our fancy shell, but it doesn't really feel any different. Let's change that.
+
+In the Linux command line, run
+
+```
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/plugins/zsh-autosuggestions
+```
+
+And
+
+```
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
+```
+
+Now I'm finally going to ask you to do something a little bit scary. You are going to edit a config file.
+
+```
+nvim .zshrc
+```
+
+When we installed Oh My ZSH earlier, that should have generated this file for you, so you should be seeing a fully populated file with a ton of comment blocks. You'll want to scroll closer to the bottom (preferably using Vim motions) and you should see block of code that looks like this
+
+```
+plugins=(git)
+```
+
+Change that to look like this
+
+```
+plugins=(
+  git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
+```
+
+While you are in here, you can change your prompt line theme if you'd like. Toward the top of the file there is a `ZSH_THEME` value, you can [browse a list of themes](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes) and just punch in the name of the theme you want in this value. Most of them will work no problem, but some may require other plugins. I personally use "re5et".
+
+Anyway, now you can save and quit (`:wq`) and running
+
+```
+source ~/.zshrc
+```
+
+You should now find your command line a little more colorful and helpful. 
+
+---
+
+And that's it! It's up to you now to research what your setup is capable of. From here I'd recommend looking through the LazyVim docs to see what you can change. A good first challenge is finding a new colorscheme and figuring out how to install it. Don't be afraid to break things, and don't be afraid to fix them. If things get too out of hand, blow it up, uninstall the whole Arch Linux instance and start over. The more you do it all, the more you understand all the tools you are working with.
+
+I also recommend following some the legends in the NeoVim space on Youtube, Twitch, and X. My suggestions are [@ThePrimeagen](https://x.com/ThePrimeagen?s=20) and [@teej_dv](https://x.com/teej_dv?s=20).
+
+If you've gotten this far, thanks for reading all this. I sincerely hope this was helpful and I truly hope it has sparked a curiosity in you. For me, coding with VSCode on Windows felt cold and shallow. Dragging myself into the world of Linux and NeoVim, I feel like I've learned so much about how these systems work.
+
+TLDR coming soon...
