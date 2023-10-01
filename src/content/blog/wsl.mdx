@@ -95,7 +95,10 @@ sudo pacman -S archlinux-keyring
 This portion is entirely unnecessary, and many will advice against this entirely, but I like to use a bit of software called Yay. Yay is what is known as a AUR helper program, and it's purpose is to make it a little easier to install packages that reside in the Arch User Repository (AUR). The AUR is a community-driven repository that allows users to build packages from the source and then install it via pacman. AUR helpers like Yay take care of all that for you and allow you to install packages from the AUR as if they were regular packages in the official Arch repository. To install Yay, run 
 
 ```
-sudo pacman -S yay
+pacman -S --needed git base-devel
+git clone https://aur.archlinux.org/yay-bin.git
+cd yay-bin
+makepkg -si
 ```
 
 Now every command you would pass to `pacman` you can now pass to `yay` but you can omit a few things like `sudo`. If yay needs super user privileges for its operations it will ask you. Also, to search a package before installing it you can simply run
@@ -131,7 +134,8 @@ You'll get a huge list of packages, but the one you want is number 1 so you can 
 Now we will install an overkill of a plugin system called Oh My Zsh. Run
 
 ```
-yay oh-my-zsh-git
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
 ```
 
 And again, install the first package.
