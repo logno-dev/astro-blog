@@ -7,6 +7,7 @@ draft: false
 ---
 
 import Anchor from '../../components/Anchor.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
 
 There is nothing better than kicking back with a nice Thinkpad running Linux on hard metal. However, I understand some people may want to take a softer approach when experimenting with Linux. Fortunately, Windows has a solution that lets us experience some of the greater parts of Linux without having a huge impact on your current system.
 
@@ -58,62 +59,78 @@ Now that you have a fresh install of Arch Linux, its time to get some things ins
 
 When you read guides for linux online, you'll often see commands that involve `apt` or `sudo apt` or possibly even `apt-get`. These commands are associated with the APT package manager. APT is the package manager used by Debian based distro, so by extension, APT is used by the ever popular Ubuntu. Since we are not using Ubuntu (or more specifically a Debian-based distro) we cannot use APT. Arch uses a package manager called Pacman. So, where on you Debian (or Ubuntu) you would use 
 
+<CodeBlock>
 ```
 sudo apt install <package_name>
-```
+  ```
+</CodeBlock>
 
 on Arch we will use
 
+<CodeBlock>
 ```
 sudo pacman -S <package_name>
-```
+  ```
+</CodeBlock>
 
 (`sudo` is actually its own program that allows us to run commands as the super user without explicitly switching to the super user. It is unrelated to the package manager and you will see it used in conjunction with a wide variety of commands. Anytime you run a command with `sudo` within a session, you will be prompted to input the password you chose when setting up the system. It is worth noting that when you input the password at this prompt, no placeholder characters are displayed, so it will appear as if you are not typing anything.)
 
 If you don't know the specific name of the package you are trying to install, you may use
 
+<CodeBlock>
 ```
 pacman -Ss <package_keyword>
-```
+  ```
+</CodeBlock>
 
 which should return a list of packages with the search terms either in the title or the description of the packages.
 
 Pacman is also used to update the system and all the packages you have installed. To do so use
 
+<CodeBlock>
 ```
 sudo pacman -Syu
 ```
+</CodeBlock>
 
 If you are running into errors with a mention of "invalid or corrupted package (PGP signature)" you will need to run
 
+<CodeBlock>
 ```
 sudo pacman -S archlinux-keyring
 ```
+</CodeBlock>
 
 #### <Anchor id="yay" /> Yay
 
 This portion is entirely unnecessary, and many will advice against this entirely, but I like to use a bit of software called Yay. Yay is what is known as a AUR helper program, and it's purpose is to make it a little easier to install packages that reside in the Arch User Repository (AUR). The AUR is a community-driven repository that allows users to build packages from the source and then install it via pacman. AUR helpers like Yay take care of all that for you and allow you to install packages from the AUR as if they were regular packages in the official Arch repository. To install Yay, run 
 
+<CodeBlock>
 ```
 pacman -S --needed git base-devel
 git clone https://aur.archlinux.org/yay-bin.git
 cd yay-bin
 makepkg -si
 ```
+</CodeBlock>
 
 Now every command you would pass to `pacman` you can now pass to `yay` but you can omit a few things like `sudo`. If yay needs super user privileges for its operations it will ask you. Also, to search a package before installing it you can simply run
 
+<CodeBlock>
 ```
 yay <keyword>
 ```
+</CodeBlock>
 
 Then you can select the package to install by choosing the associated number.
 
 Yay can also be used to update the system by simply running
 
+<CodeBlock>
 ```
 yay
 ```
+</CodeBlock>
 
 ---
 
@@ -125,26 +142,31 @@ Now I want to start getting you set up with some of the more exciting software. 
 
 So lets install ZSH
 
+<CodeBlock>
 ```
 yay zsh
 ```
+</CodeBlock>
 
 You'll get a huge list of packages, but the one you want is number 1 so you can simply hit "Enter" to select it. Hit "Enter" at the next two prompts and let it install. It will likely ask for your root password, input your password and hit enter.
 
 Now we will install an overkill of a plugin system called Oh My Zsh. Run
 
+<CodeBlock>
 ```
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
 ```
+</CodeBlock>
 
 And again, install the first package.
 
 Now we want to make Zsh our default shell by running
 
+<CodeBlock>
 ```
 chsh -s $(which zsh)
 ```
+</CodeBlock>
 
 Now when you open the Arch Linux instance, you will automatically load into zsh. We will get into some further customization with zsh a little later. For now, lets get some other things setup.
 
@@ -154,9 +176,11 @@ I'm going to get you set with the best text editor of all time, but before we do
 
 Run the following command to install these packages
 
+<CodeBlock>
 ```
 yay -S nodejs npm lazygit ripgrep fd neovim
 ```
+</CodeBlock>
 
 This will install Node.js, Npm (the Node.js package manager), and a few other tools that will make things just a little fancier. That last one, neovim, is a big one. But as it is, you wont find it much fun. We'll fix that.
 
@@ -164,21 +188,27 @@ This will install Node.js, Npm (the Node.js package manager), and a few other to
 
 As stated earlier, NeoVim **IS** the greatest text editor ever. But on its own, it can feel a bit barren. Part of what makes it so great though, is its ability to be sculpted and crafted to our specific needs. Now diving straight into the configs and building out your own setup can be quite the barrier. If you are up for the task, I highly recommend seeking out one of the many guides and doing so. But I understand most rational people will opt to bypass that process. For those individuals, there are NeoVim distros. Similar to Linux distros, NeoVim distros build upon the glory of the base program and provide a fully developed configuration. You still have the option to expand upon them and change options to your liking, but they deliver quite a pleasant experience out of the box. There are several options that you can look into, such as NvChad, kickstart.nvim, and LunarVim. LunarVim is an excellent option for beginners as it is quite a comprehensive distro with most everything you would ever want. NvChad may require a little more tweaking, and kickstart.nvim is more of just a scaffolding for you to build your own config out of. But today we are going to install LazyVim, which is a distro built on the latest and greatest lazy.nvim plugin manager. So lets get straight into it. Run
 
+<CodeBlock>
 ```
 git clone https://github.com/LazyVim/starter ~/.config/nvim
 ```
+</CodeBlock>
 
 Then run
 
+<CodeBlock>
 ```
 rm -rf ~/.config/nvim/.git
 ```
+</CodeBlock>
 
 And you are all set! Open it up by running
 
+<CodeBlock>
 ```
 nvim
 ```
+</CodeBlock>
 
 The first time starting it up, it will install a bunch of stuff. It shouldn't take long, and you should soon be presented with the LazyVim landing screen. If you are not familiar with Vim and Vim motions, before you touch **anything** type `:Tutor` and follow the instructions given to you. Run through it a few times if you need to. Get the basics down and then move on. As times go on, you may want to revisit it and refresh your memory on some of the lesser used functions. 
 
@@ -192,30 +222,39 @@ So now we have a proper text editor fully configured and ready to edit some text
 
 In the Linux command line, run
 
+<CodeBlock>
 ```
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/plugins/zsh-autosuggestions
 ```
+</CodeBlock>
 
 And
 
+<CodeBlock>
 ```
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
 ```
+</CodeBlock>
 
 Now I'm finally going to ask you to do something a little bit scary. You are going to edit a config file.
 
+<CodeBlock>
 ```
 nvim .zshrc
 ```
+</CodeBlock>
 
 When we installed Oh My ZSH earlier, that should have generated this file for you, so you should be seeing a fully populated file with a ton of comment blocks. You'll want to scroll closer to the bottom (preferably using Vim motions) and you should see block of code that looks like this
 
+<CodeBlock>
 ```
 plugins=(git)
 ```
+</CodeBlock>
 
 Change that to look like this
 
+<CodeBlock>
 ```
 plugins=(
   git
@@ -223,14 +262,17 @@ plugins=(
   zsh-syntax-highlighting
 )
 ```
+</CodeBlock>
 
 While you are in here, you can change your prompt line theme if you'd like. Toward the top of the file there is a `ZSH_THEME` value, you can [browse a list of themes](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes) and just punch in the name of the theme you want in this value. Most of them will work no problem, but some may require other plugins. I personally use "re5et".
 
 Anyway, now you can save and quit (`:wq`) and running
 
+<CodeBlock>
 ```
 source ~/.zshrc
 ```
+</CodeBlock>
 
 You should now find your command line a little more colorful and helpful. 
 

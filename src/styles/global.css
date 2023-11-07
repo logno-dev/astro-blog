@@ -112,6 +112,7 @@ code {
 }
 pre {
 	padding: 1.5em;
+  margin-block: 0;
 	border-radius: 8px;
 }
 pre > code {
@@ -164,6 +165,27 @@ hr {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
+}
+
+.code-wrap {
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.code-wrap button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border: 2px dashed #ffffff;
+  border-radius: 6px;
+  background: none;
+  color: #ffffff;
+  opacity: 0.5;
+}
+
+.code-wrap button:hover {
+  transform: translateX(-2px) translateY(-2px);
+  opacity: 0.7;
 }
 
 .sr-only {

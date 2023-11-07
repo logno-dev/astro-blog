@@ -1,0 +1,46 @@
+---
+---
+
+<div class="code-wrap">
+    <slot />
+</div>
+
+<style>
+.code-wrap {
+  position: relative;
+  overflow-x: hidden;
+}
+
+pre {
+ overflow-x: auto;
+}
+</style>
+
+    <script>
+    document.querySelectorAll(".code-wrap").forEach((block)=>{
+      if ( navigator.clipboard ) {
+        let button = document.createElement("button")
+
+        button.innerText = "Copy"
+        block.appendChild(button)
+
+        button.addEventListener("click", async () => {
+          await copyCode(block, button)
+        })
+      }
+    })
+
+    async function copyCode(block, button) {
+      let code = block.querySelector("code")
+      let text = code.innerText
+
+      await navigator.clipboard.writeText(text)
+
+      button.innerText = "Copied!"
+
+      setTimeout(()=> {
+        button.innerText = "Copy"
+      },700)
+    }
+    </script>
+
