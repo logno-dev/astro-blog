@@ -66,7 +66,7 @@ const posts = (await getCollection('blog', ({ data })=> !data.draft === true)).s
 				color: rgb(var(--accent));
 			}
 			ul a:hover img {
-				box-shadow: var(--box-shadow);
+        transform: scale(1.05);
 			}
 			@media (max-width: 720px) {
 				ul {
