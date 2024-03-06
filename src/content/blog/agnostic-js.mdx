@@ -1,0 +1,259 @@
+---
+title: 'Framework Agnostic Guide to Modern JS Frameworks'
+description: "This is my attempt to explain the structure and philosophy of modern frontend JS frameworks."
+pubDate: 'February 12, 2024'
+heroImage: '/js_wizard.png'
+draft: false
+---
+
+import Anchor from '../../components/Anchor.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+
+Just to be fully transparent, I would still consider myself in the novice category when it comes to web development. At the time of this writing, I am not employed in tech and if were to seek a job right now, I would most certainly be hired on as a junior developer. That said, I have spent a considerable amount of time experimenting with the various available frameworks, and I think I have valuable perspective to offer. This article is directed to those who have learned a fair amount of the classic website structure using HTML, CSS, and JavaScript and just starting to ogle React or other such frameworks.
+
+## <Anchor id="modern-web">Modern Web Development</Anchor>
+
+So you've learned about semantic HTML, you can whip up some CSS with a fair bit of ease, and you can manipulate the DOM at will with some fancy scripts. What's next? Surely you've grown tired of copying and pasting an entire pages worth of html to a new document when you want to create a new page for your website, or making sure you've made the same change and all the different pages any time you update something in your layout. Or maybe you have a considerable amount of content on each page and you start to notice that loading times between pages is becoming quite noticeable. These are just some of the things that modern web development has taken great strides to solve.
+
+A bit of a foreword, it is important to note that while I refer to React.js as a framework throughout this article, technically speaking, React.js is only a library. This is a bit of a point of contention within the community. The distinction is that React.js itself does not dictate how you structure your project and it does not impose strong opinions on how you implement its features. However, I refer to React as a framework throughout this article because it is very rare to see React used in a way that resembles a typical library. React is usually found embed within a framework (such as Next.js) or a template is provided by the bundler (such as Vite.js and React) which effectively acts as its own framework.
+
+### <Anchor id="history">A Bit of History</Anchor>
+
+Without going into extensive detail, for a long time, websites were mostly static. The structure you have been learning is very much what was used for businesses front facing sites. Fancy layouts were controlled by abusing the `table` element and getting rounded corners on a single button required stitching together several images and some painstaking precision photoshop work. JavaScript let us create some fancy interactive animations and Macromedia Flash ran rampant throughout the internet. This was all fun and games of course, but any website that needed to actually accomplish anything and be taken seriously at all had to run some php in the back-end.
+
+There was a whole phase of jQuery and Ajax that I completely missed, but from what I've heard, they filled many gaps in JavaScript at the time. Php was loved and hated, and still is to this day. WSIWYG editors gained a bit of popularity pumping out extremely bloated static websites. It was a bleak time and there did not seem to be any drastic improvements on the horizon.
+
+Enter React.js. We gained the concept of only re-rendering the parts of the page that need it. We could finally come up with creative ways to handle state and create powerful web applications without relying so much on a back-end server.
+
+I won't claim that the modern way of building websites solve all of our problems and eliminates the back-end entirely. That's absolutely not true, the new methods certainly solve many problems but consequently they have created plenty of new problems. And the back-end is just as, if not more important than ever before.
+
+My personal experience is rooted in HTML and CSS from about 15 years ago when we thought that WSIWYG editors were going to eliminate the need for any manual coding. I abandoned web development only to return this past year. From my perspective, the contrast between the development flow back then vs is now is stark and much more pleasurable. People who stuck with it through the years seem to praise the peak of jQuery and Ajax, referring to them as the glory days of web development. I didn't have that experience, so I can't speak to the validity of those claims. But I can say that I very much appreciate the modern approach is it is today.
+
+## <Anchor id="tooling">Tooling</Anchor>
+
+If you have read any of other blog posts (or stalked my twitter account, creep!) you most likely know I have some strong opinions on operating systems and editors. Those are of little consequence in this discussion though. In my opinion, the two most powerful changes to the modern workflow is the advent of Node.js and Git. Node.js is far from perfect, I understand that, but among other things, it has vastly improved the way we approach building projects. As far as Git, version control software was inevitable, so I can't pretend Git is mindbogglingly revolutionary, but its popularity means that I will likely never have to touch an ftp client ever again.
+
+---
+
+Most of these terms I'll be using are likely derived from React.js, but many frameworks share the same terminology, though some may differ slightly.
+
+### <Anchor id="node">Node.js</Anchor>
+
+If you have only written raw HTML, CSS, and JavaScript, you may not know a whole lot about Node.js. The very short of it is, Node.js is a JavaScript runtime. That very basically means that you can run JavaScript in a program outside of a browser. There's a whole thing about an event loops and whatnot, but I'm not getting into that here. The important thing for the context of this article is that Node.js allows use to make use of packages through something called the Node Package Manager (npm) and modules. With just those two things we can piece together quite an improvement to our work flow. I'll talk on modules a bit later, but I'd like to introduce one particular type of package that has a huge impact.
+
+### <Anchor id="bundler">Bundler</Anchor>
+
+If you are not aware, the name "JavaScript" is a trademark owned by the Oracle Corporation. A bit of a tangent, but let me cook. So while we all use a language that we call JavaScript, we are abiding by the standards laid out for us in something called ECMAScript. Going into the details of ECMAScript could certainly fill its own article, so just know that ECMAScript extends beyond JavaScript, and its standards are released periodically adding new features to JavaScript. This updates are truly few and far between, and while we have been able to push a lot of really needed features into the mainstream in the past decade, there is a huge hurdle in getting the cutting edge features available to developers. That hurdle is browsers. There are too many of them, and too many people will sit on their browser for months or years without clicking that update button. Browser developers are slow to build in the newest features, and when they do, it takes ages to permeate out to the general public. As developers though, our saving grace is the fact that software like Node.js and its various packages can take advantage of those new features, churn your code a bit, and pump out a website that is compatible with the browsers in use today. These packages are called bundlers.
+
+One of the early and more popular bundlers was a package called WebPack. WebPack was brilliant and solved a lot of problems. It allowed us to pull packages from npm, optimize our CSS, pre-process images, use ECMAScript modules, and more. After a tedious process of building your configuration, you are able to run a simple script, and your website is ready to launch, with minified code. Unused CSS classes are dropped, all your lengthy descriptive variable names are reduced to just a few characters, whitespace is eliminated, all is well. Except that Webpack aged, and it didn't age terribly well. Faster and easier options were hitting the marketplace. So I will say, if you are following a tutorial that is using WebPack, and it isn't explicitly walking you through the evolution to more modern solutions, you should probably look for an updated tutorial. It is worth understanding WebPack for the ability to work in older codebases. In 2024, you should probably just be using Vite.js. Maybe TurboPack if Vercel has successfully lured you into their lair.
+
+### <Anchor id="git">Git and GitHub</Anchor>
+
+The way we used to get websites to a server was to send files over FTP (File Transfer Protocol) which was fine for the time. It got the job done. But using a client to drag and drop files to the server felt archaic even back then. Git and GitHub give us the ability to manage versions, keep production and development code separate, and sync code to a server where someone else can automatically deploy it. And all that can be done with just a few commands in the command line. Brilliant.
+
+## <Anchor id="structure">Structure</Anchor>
+
+Let's get into the actual structure of a modern JavaScript Framework. We'll start with a few core concepts.
+
+### <Anchor id="components">Components</Anchor>
+
+You may have run across the acronym DRY (Don't Repeat Yourself) throughout your coding journey. While I disagree with this sentiment to an extent, the advent of components is an excellent execution of the DRY philosophy. Components allow you to write a bit of markup, attach some script to it, maybe if attach some CSS to it, and then use that component in several places throughout your code. The various frameworks have different structures for components, and different ways they handle props and state (which we will discuss later on). But the core function of a component is to create something once and use it several times.
+
+### <Anchor id="props">Props</Anchor>
+
+The way I think of props is that props are to components as arguments are to functions. They are simply "things" (whether that is a string, number, or object) that you can send to a component to be used inside the component. Props are one of the primary reasons components are able to be reused. Anything that we want in the component that may change depending on where we call the component, we call a prop in its place. Props are commonly passed into a component using syntax similar to an HTML attribute.
+
+### <Anchor id="jsx">JSX</Anchor>
+
+If you are familiar with template strings in JavaScript, JSX should come pretty naturally to you. It is essentially HTML that is embed in JavaScript that allows JavaScript to be injected in any point.
+
+<CodeBlock>
+```js
+// Template String
+const templateString = `<p>Hello ${name}</p>`
+
+// JSX
+
+const jsx = (
+  <p>Hello {name}</p>
+)
+```
+</CodeBlock>
+
+In this simplified example, the differences are very small, but in both cases the portion between the curly brackets can be any valid JavaScript that returns a string. While many HTML attributes may be used in JSX there are some attributes that clash with reserved JavaScript keywords such as `class`, so in JSX you must use an alternative dictated by the framework you choose (e.g. `className` in React).
+
+While it is possible and perhaps even desirable to assign JSX directly to `const` as in the example above, it is far more common to return JSX from a function:
+
+<CodeBlock>
+```js
+const FunctionComponent = () => {
+  return (
+    <p> Hello World!</p>
+  )
+}
+```
+</CodeBlock>
+
+This is where props can come in to play. We can pass data into that JSX from outside the function component:
+
+<CodeBlock>
+```js
+const FunctionComponent = ({name}) => {
+  return (
+    <p>Hello {name}</p>
+  )
+}
+
+// when the component is called you
+// may pass the prop in like so:
+(
+  <FunctionComponent name="Logno" />
+)
+```
+</CodeBlock>
+
+The syntax for handling props differs between frameworks, but they all function broadly the same.
+
+### <Anchor id="layout">Layout</Anchor>
+
+Layouts in most frameworks are generally just a semantic distinction from a function component. This is where you include all the markup that makes up the bulk of your website. Here you will rope in your `Header` component and `Footer` component. This will also be where you focus on how your website will block out on different medias. So all the `div`'s using `grid` or `flexbox` will be handled here.
+
+A simple layout may look something like this:
+
+<CodeBlock>
+```html
+<>
+  <Header />
+  <body>
+    <aside>
+      <InfoBox />
+    </aside>
+    <div className="content">
+      {children}
+    </div>
+  </body>
+  <Footer />
+</>
+```
+</CodeBlock>
+
+(The `<></>` is the result of a rule built into the framework that states that all functions must return a single parent element. So if you wish to pass sibling elements to the output, you must wrap them in these dummy element brackets.)
+
+When you go to create individual pages you will call the Layout component like so:
+
+<CodeBlock>
+```html
+<Layout>
+  // ...page specific jsx or components here
+</Layout>
+```
+</CodeBlock>
+
+The `{children}` will be replaced by whatever JSX you have between `<Layout>` and `</Layout>`.
+
+Again, the syntax may differ based on the framework. Astro, for example, uses `<slot />` instead of `{children}`.
+
+### <Anchor id="state">State</Anchor>
+
+So far, what we have is enough to eliminate a ton of repetition in markup. But that's not really what is truly exciting about front end frameworks. We want to have content on a page that can change and we don't want to reload the whole page just to see that happen. Yes, simple DOM manipulation can do that, and for simple applications, its not too difficult to implement. But you may just need to pass around a significant amount of data, and it can be rather cumbersome to write all that DOM action and storage in vanilla JavaScript. That's where state comes into play. In the following examples, I will use React syntax. Other frameworks of done fantastic jobs trimming down the syntax making it quite a bit simpler to handle state, but I believe if you can wrap your head around state in React, it will be easier to understand elsewhere.
+
+See the classic counter example below: 
+
+<CodeBlock>
+```js
+const Counter = () => {
+  const [count, setCount] = useState(0);
+  return (
+  <button onClick={()=>setCount(count + 1)}>{count}</button>
+  )
+}
+```
+</CodeBlock>
+
+A lot is happening here. First, note that we used `const` rather than `let`. This is good practice. `let` should only be used when absolutely needed, all other cases should use `const`. Next, the array syntax on the left the declarative `=` is called deconstructing. The `useState()` function supplied by React returns two items, so when we call it, we want to assign those two items appropriate names. The first item should just be the name of the variable we want to set. The second item is a function that sets a new value to the variable when its called. This may seem unintuitive, why not just use `let` then we can change it directly as we wish. State in React is explicitly immutable. By using the `useState` function, we are allowing React to take control of that variable and manipulate the DOM only as needed based on the changes to that variable. If you simply set a value to a variable using `let`, you can then change that variable at will, and the user would never know unless you feed that to the DOM somehow. By using `useState`, we are ensuring that everywhere `count` is called, we are erasing the old `count` from existence, and replacing it with a brand new value.
+
+---
+
+Now with a few basic components explained, lets piece together a basic project.
+
+### <Anchor id="file-structure">File Structure</Anchor>
+
+File structure may be dictated by the framework you choose to use. However, there seems to be a common structure that looks something like this:
+
+```
+.
+|-node_modules/
+|-public/
+|-src/
+| |-main.jsx
+| |-App.jsx
+| |-App.css
+|-package.json
+|-README.md
+|-index.html
+|-vite.config.js
+|-.git/
+|-.gitignore
+```
+
+I would say that this is the bare minimum for a React project.
+
+The `node_modules` directory contains any packages that are listed in your `package.json`. It is very important to note that the `node_modules` directory should only be stored locally, that is, the `node_modules` should be included in your `.gitignore` file. As your project grows, the `node_modules` can begin to swell significantly and it is a cardinal sin to push all that data to the remote server.
+
+The `public` directory is a special directory used by the bundler to expose unprocessed files to the built app. In other words, putting an image file in the `public` directory is equivalent to placing an image file in the root directory of a traditional HTML website structure. To access an image in the `public` directory from a file in the root of the `src` directory, you treat relative path names as if they are in the same directory. For example, say you have an image in the `public` directory called `hero.png` and you wish to include with the JSX of your `App.jsx`. You would do so like this:
+
+<CodeBlock>
+```html
+<img src="/hero.png">
+```
+</CodeBlock>
+
+The `src` directory is where all your code lives. Depending on the framework you are using, the way the code will be injected may differ. Some bundlers or frameworks may require you to have a plain `index.html` file in the root directory of the project that sources your `main.jsx` file. Some frameworks, Next.js for example, will build the output entirely from an `app` directory given that some specific files are present.
+
+Within the `src` directory are some key files. Starting with the `main.jsx`, if you have any experience with other C like languages, there is always a `main` function. The `main.jsx` file mirrors that functionality as this file acts as a funnel for all of your code. Your `index.html` sources this file, and this file reaches out to all other resources as needed. This file is typically very small, it may only be 5 or 6 lines of code, as it only needs to reference a DOM entry point, and then inject your app code into that point. This will also be where you import your top level framework modules. A basic `main.jsx` file may look something like this:
+
+<CodeBlock>
+```js
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import './index.css'
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+```
+</CodeBlock>
+
+Notice from here, `App` is being imported from `./App.jsx`. This file is where the meat of your project will be. This is, for all intents and purposes, your `index.html`. The JSX written here will be the output when your site is visited at the root domain. A simple `App.jsx` may look something like this:
+
+<CodeBlock>
+```js
+import Layout from './layout.jsx'
+import './App.css'
+
+function App() {
+
+  return (
+    <>
+      <h1>This is my React test</h1>
+      <Layout>
+        <h2>This is some stuff inside my layout</h2>
+      </Layout>
+    </>
+  )
+}
+
+export default App
+```
+</CodeBlock>
+
+This app would require a `layout.jsx` to be present in the `src` directory as well. 
+
+The `package.json` is a file that contains the names and versions of the packages you will be using in your project. You may add items to this manually and the packages will be installed when you run `npm install` within your project root. Alternatively, if you install packages via the command line (`npm install <package_name>@<version>`), the appropriate line will be added to this document as well as the package being installed. This file allows you to install all the needed packages with a single command. As mentioned before, we do not want to sync our `node_modules` directory to the remote repository, so if you or someone else clones the remote repository, they may install all the needed packages and their respective versions.
+
+The `README.md` should be self explanatory. This is where you should explain your project and any build instructions required to run the project.
+
+The `index.html`, depending on you structure build your project, may only be some simple meta data, and then a `div` with an `id` that will act as the injection point for your app.

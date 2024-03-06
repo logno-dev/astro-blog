@@ -5,6 +5,20 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
+	site: 'https://blog.logno.dev',
 	integrations: [mdx(),],
+	markdown: {
+		render: [
+			'@astrojs/mardown-remark',
+			{
+				syntaxHighlight: 'shiki',
+				shikiConfig: {
+					theme: 'github-dark',
+					langs: ['js', 'html', 'css', 'bash', 'astro'],
+					wrap: false,
+				}
+			}
+		]
+	}
+
 });

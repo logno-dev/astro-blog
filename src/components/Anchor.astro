@@ -2,10 +2,13 @@
 const { id } = Astro.props
 ---
 
-<a class="anchor" id={id} href={"#" + id}>#</a>
+<a class="anchor" id={id} href={"#" + id}>#<slot /></a>
 
 <style>
 .anchor {
   text-decoration: none;
+}
+.anchor:hover {
+  color: #d3d3d3;
 }
 </style>
