@@ -1,17 +1,17 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { getCollection } from 'astro:content';
-import FormattedDate from '../components/FormattedDate.astro';
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { getCollection } from "astro:content";
+import FormattedDate from "../components/FormattedDate.astro";
 
-const posts = (await getCollection('blog', ({ data })=> !data.draft === true)).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+const posts = (
+	await getCollection("blog", ({ data }) => !data.draft === true)
+).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
@@ -66,7 +66,7 @@ const posts = (await getCollection('blog', ({ data })=> !data.draft === true)).s
 				color: rgb(var(--accent));
 			}
 			ul a:hover img {
-        transform: scale(1.02);
+				transform: scale(1.02);
 			}
 			@media (max-width: 720px) {
 				ul {
@@ -94,7 +94,13 @@ const posts = (await getCollection('blog', ({ data })=> !data.draft === true)).s
 						posts.map((post) => (
 							<li>
 								<a href={`/blog/${post.slug}/`}>
-									<img width={720} height={360} src={post.data.heroImage} alt="" transition:name={post.data.title} />
+									<img
+										width={720}
+										height={360}
+										src={post.data.heroImage}
+										alt=""
+										transition:name={post.data.title}
+									/>
 									<h4 class="title">{post.data.title}</h4>
 									<p class="date">
 										<FormattedDate date={post.data.pubDate} />
@@ -107,6 +113,5 @@ const posts = (await getCollection('blog', ({ data })=> !data.draft === true)).s
 			</section>
 		</main>
 		<Footer />
-
 	</body>
 </html>
