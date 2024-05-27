@@ -110,8 +110,15 @@ import HeaderLink from "./HeaderLink.astro";
 	}
 
 	@media (max-width: 720px) {
+		nav {
+			flex-wrap: wrap;
+		}
 		.social-links {
 			display: none;
+		}
+		.flex {
+			display: block;
+			position: static;
 		}
 	}
 </style>
