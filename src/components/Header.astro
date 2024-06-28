@@ -4,17 +4,14 @@ import HeaderLink from "./HeaderLink.astro";
 
 <header>
 	<nav>
-		<div class="large">
-			<a href="/" class="logo"
-				>logno.dev <span class="handwritten">blog</span
-				></a
-			>
+		<div class="large top">
+			<a href="/" class="logo">logno.dev <span class="handwritten">blog</span></a>
 		</div>
-			<div class="internal-links">
-				<HeaderLink href="/">Blog</HeaderLink>
-				<HeaderLink href="/about">About</HeaderLink>
+		<div class="internal-links">
+			<HeaderLink href="/">Blog</HeaderLink>
+			<HeaderLink href="/about">About</HeaderLink>
 		</div>
-		<div class="social-links">
+		<div class="social-links top">
 			<a
 				href="https://twitter.com/loganbunch"
 				target="_blank"
@@ -73,6 +70,7 @@ import HeaderLink from "./HeaderLink.astro";
 	}
 	nav {
 		display: flex;
+		position:relative;
 		align-items: center;
 		justify-content: space-between;
 	}
@@ -111,6 +109,19 @@ import HeaderLink from "./HeaderLink.astro";
 		font-size: 1.3em;
 	}
 
+	.internal-links {
+		position: absolute;
+		display: flex;
+		place-content:center;
+		top: 0;
+		left: 0;
+		right: 0;
+	}
+
+	.top {
+		z-index: 99;
+	}
+
 	@media (max-width: 720px) {
 		nav {
 			flex-wrap: wrap;
@@ -121,6 +132,10 @@ import HeaderLink from "./HeaderLink.astro";
 		.flex {
 			display: block;
 			position: static;
+		}
+		.internal-links {
+			display: block;
+			position: inherit;
 		}
 	}
 </style>
