@@ -4,17 +4,15 @@ import HeaderLink from "./HeaderLink.astro";
 
 <header>
 	<nav>
-		<h2>
+		<div class="large">
 			<a href="/" class="logo"
 				>logno.dev <span class="handwritten">blog</span
 				></a
 			>
-		</h2>
-		<div class="flex">
+		</div>
 			<div class="internal-links">
 				<HeaderLink href="/">Blog</HeaderLink>
 				<HeaderLink href="/about">About</HeaderLink>
-			</div>
 		</div>
 		<div class="social-links">
 			<a
@@ -107,6 +105,10 @@ import HeaderLink from "./HeaderLink.astro";
 
 	.logo {
 		font-family: "Roboto Mono", monospace;
+	}
+
+	.large {
+		font-size: 1.3em;
 	}
 
 	@media (max-width: 720px) {
