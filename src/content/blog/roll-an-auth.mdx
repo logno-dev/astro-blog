@@ -1,0 +1,67 @@
+---
+title: 'Roll an Auth'
+description: 'This is not a guide to rolling your own auth. This is my documenting my attempt to roll my own authentication system.'
+pubDate: 'Nov 26, 2024'
+heroImage: '/auth.jpg'
+draft: true
+---
+
+*Roll your own auth* is kind of a meme. It is thought to be a bad idea because it is such a crucial aspect of your apps security. However, at this stage in my coding journey, I wanted to do it, so I could see how it is done.
+
+This isn't a guide to building a bullet proof authentication system. This is not a guide at all. I simply want to outline my process of learning and building my own authentication system.
+
+## Introduction
+
+I want to start by outlining a bit of what I knew about auth going in, my issues with pre-rolled offerings, and some specifications on what I intended to accomplish.
+
+### Prior Knowledge
+
+My experience with auth entails one instance utilizing Supabase's pre-baked auth in a Vue project and one instance of using NextAuth obviously in a Nextjs project with MongoDB. 
+
+Both cases I opted for an email/password method and in both cases I needed a closed registration.
+
+The Supabase implementation was rather hacky. I was using the free tier, so I needed to go in and wake-up the instance once a week to keep it active. Beyond that, the way I made the closed registration was I hard coded a passcode that was required at registration. Obviously a terrible idea, because it could likely easily be bypassed snooping around the dev tools for a bit. It wasn't securing anything crucial, so it worked for what it was. I also didn't hash the passwords on the front-end and I have know idea if Supabase hashed them on the back end, so I may have been storing plain text passwords in the database.
+
+For the NextAuth implementation, I did a bit more research and learned how to hash passwords on the front end so I could store passwords securely on the database. To keep the registration closed, I manually generated a string and constructed and URL with the unique that I independently loaded into the database. When the user registered, it would check that the string is valid, then it would delete the string from the database so it couldn't be used again. I only had about 4 users, so this worked fine. NextAuth itself was fine to use to secure routes, and if my memory serves me right, it handled sessions for me, so I didn't have to worry about that myself.
+
+### Gripes
+
+If my understanding is correct, there are two aspects to building authentication; protecting routes on the front end, and checking and storing user data on the back end.
+
+Before getting too far into this, I want to say that AWS Cognito likely does exactly what I want but I still wanted to build my own system for the learning experience.
+
+You can't spend two minutes looking into auth without being bombarded with tools, tutorials, and services built around OAuth. OAuth is probably exactly what 99% of apps should use, and I won't argue that. But as I am learning to build stuff, most of what I am going to build is going to be used by me and maybe a couple other people. I just want to build it and not involve Google. Perhaps I am obtuse, but I do not think registering an app in Google for OAuth is a straight forward process. And once you do get it set up, building a system of privileges is nearly out of the question. Reading some discussion boards, it seems there is a distinction between authentication and authorization. OAuth is intended to verify that your user is attached to the account they say they are, that's about it. It is also helpful when building tools that tie into the services linked to the providers services. But what it is not great for is restricting access to content on your app.
+
+So how can I simply restrict content on my site? On the front end, when using React, there are several packages that can be used to protect routes, but they are very then abstractions of React Context, so there is little point in adding a dependency. As for the back end, or implementing a way of checking user credentials and serving some sort of message back to the front end to give it the go ahead to display content, its not so straight forward.
+
+### Specifications
+
+My requirements are pretty basic:
+
+- Self-hosted
+- Allow for roles
+- Maintain sessions
+
+Obviously anything that I write myself will be self-hosted. But I include that, because there doesn't seem to be any available packages that can easily be deployed on a local machine that will handle storing users and serve the needed data for protecting routes.
+
+I want roles so that I can potentially build admin pages for my app.
+
+And sessions are straight forward, I just want them to be verified by the backend.
+
+## The Stack
+
+As newbies usually do, I like to hop around to different and often new technologies. This can be considered bad practice, because you end up with a surface level knowledge of many tools and no deep knowledge of any one tool. However, the goal is to become adept at a technology that is going to be around for a long time, and when you are new, you don't have the wisdom to forsee what technologies may last. So I like to try new technologies mixed with the the "older" more popular technologies.
+
+For this project I used the Hono to run the back end, Vite + React to run the front end, and a libsql (Turso) database. React is the oldest tech in this stack, though it is driven by Vite. Vite is relatively new, but it has become the defacto method of deploying a React app and I see it as being around for a while. No one wants to fiddle with Webpack in 2024.
+
+For the database, I have been fiddling with Turso for a while now and it is absolutely the best. I really can't imagine using any other database in the near future.
+
+Hono for the back end is probably the diciest decision. Hono is still pretty fresh and there is no telling if it is going to stick around for the long run. Most documentation and guides in this space default to an Express server, which feels ancient now. But comparing the two, Hono seems to maintain a lot of the design paradigms of Express while cleaning things up a bit and offering a lot of the commonly used middleware as first party packages. That alone made me feel a bit more comfortable using Hono as I would not have to use middleware recommended by decade old stack overflow responses.
+
+## The Build
+
+Now that I've established what tools I am going to use, let's get started building things out.
+
+### Back End
+
+As mentioned above, I used Hono for the back end. Hono comes with builtin middlewares for basic authentication and bearer based authentication. As far as I could tell, the basic authentication can only be used to serve 
