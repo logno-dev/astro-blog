@@ -13,52 +13,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
-		<script defer>
-			function getClass(h) {
-				switch (h) {
-					case "h2":
-						return "";
-					case "h3":
-						return "h-three";
-					case "h4":
-						return "h-four";
-					case "h5":
-						return "h-five";
-					case "h6":
-						return "h-six";
-				}
-			}
-
-			function processHeaders() {
-				const contents = document.getElementById("contents");
-				const headerList = [];
-				function linkHeader(h) {
-					document.querySelectorAll(h).forEach((heading) => {
-						const slug = String(heading.innerText)
-							.toLowerCase()
-							.replaceAll(" ", "-")
-							.replaceAll("?", "")
-							.replaceAll(".", "")
-							.replaceAll("!", "")
-							.replaceAll(",", "-")
-							.replaceAll(":", "");
-						const text = heading.innerText;
-						heading.innerHTML = `<a href="#${slug}" id="${slug}">#${text}</a>`;
-						headerList.push({
-							header: heading.localName,
-							slug: slug,
-							text: text.replaceAll(":", ""),
-						});
-					});
-				}
-				linkHeader("h2, h3, h4, h5, h6");
-				headerList.forEach((header) => {
-					contents.innerHTML += `<li class="${getClass(header.header)}"><a href="#${header.slug}" class="contents-item">${header.text}</a></li>`;
-				});
-			}
-			processHeaders();
-			window.addEventListener("load", processHeaders);
-		</script>
 		<style>
 			main {
 				width: calc(100% - 2em);
@@ -111,6 +65,8 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 					position: fixed;
 					left: 0;
 					top: 10rem;
+					overflow-y: auto;
+					max-height: calc(100dvh - 14rem);
 				}
 			}
 
@@ -168,5 +124,85 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			</article>
 		</main>
 		<Footer />
+		<script defer>
+			function getClass(h) {
+				switch (h) {
+					case "h2":
+						return "";
+					case "h3":
+						return "h-three";
+					case "h4":
+						return "h-four";
+					case "h5":
+						return "h-five";
+					case "h6":
+						return "h-six";
+				}
+			}
+
+			function processHeaders() {
+				const contents = document.getElementById("contents");
+				const headerList = [];
+				const elementList = [];
+				function linkHeader(h) {
+					document.querySelectorAll(h).forEach((heading) => {
+						elementList.push(heading);
+						const slug = String(heading.innerText)
+							.toLowerCase()
+							.replaceAll(" ", "-")
+							.replaceAll("?", "")
+							.replaceAll(".", "")
+							.replaceAll("!", "")
+							.replaceAll(",", "-")
+							.replaceAll(":", "");
+						const text = heading.innerText;
+						heading.innerHTML = `<a href="#${slug}" id="${slug}">#${text}</a>`;
+						headerList.push({
+							header: heading.localName,
+							slug: slug,
+							text: text.replaceAll(":", ""),
+						});
+					});
+				}
+				linkHeader("h2, h3, h4, h5, h6");
+				headerList.forEach((header) => {
+					contents.innerHTML += `<li class="${getClass(header.header)}"><a href="#${header.slug}" class="contents-item">${header.text}</a></li>`;
+				});
+				return elementList;
+			}
+
+			let headerList = processHeaders();
+			const generatedContentItem = document.querySelectorAll(".contents-item");
+			generatedContentItem.forEach((el) => {
+				el.classList.remove("active");
+			});
+
+			const options = {
+				root: null,
+				rootMargin: "-50% 0px -40% 0px",
+				threshold: 0.8,
+			};
+
+			const handleObserver = (entries, observer) => {
+				entries.forEach((entry) => {
+					if (!entries[0].isIntersecting) {
+						document.querySelector(".active").classList.remove("active");
+					}
+					generatedContentItem.forEach((el) => {
+						el.classList.remove("active");
+						if (el.innerText === entry.target.innerText.replace("#", "")) {
+							el.classList.add("active");
+						} else {
+							el.classList.remove("active");
+						}
+					});
+				});
+			};
+			const observer = new IntersectionObserver(handleObserver, options);
+
+			headerList.forEach((el) => {
+				observer.observe(el);
+			});
+		</script>
 	</body>
 </html>

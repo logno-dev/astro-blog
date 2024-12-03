@@ -137,7 +137,7 @@ pre {
   border-radius: 8px;
 }
 
-pre > code {
+pre>code {
   all: unset;
 }
 
@@ -163,11 +163,11 @@ hr {
   }
 }
 
-.pros > * {
+.pros>* {
   list-style-type: "+";
 }
 
-.cons > * {
+.cons>* {
   list-style-type: "-";
 }
 
@@ -239,14 +239,17 @@ hr {
   font-size: 0.9em;
   margin-left: 2em;
 }
+
 .h-four {
   font-size: 0.8em;
   margin-left: 4em;
 }
+
 .h-five {
   font-size: 0.7em;
   margin-left: 6em;
 }
+
 .h-six {
   font-size: 0.6em;
   margin-left: 8em;
@@ -256,4 +259,8 @@ hr {
   font-size: 1.2em;
   text-decoration: underline;
   margin: 0;
+}
+
+a.contents-item.active {
+  color: white;
 }
