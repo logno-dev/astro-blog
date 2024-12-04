@@ -1,7 +1,9 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
+import { ClientRouter } from "astro:transitions";
 import Header from "../components/Header.astro";
+import LoadContents from "../components/LoadContents.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 
@@ -13,6 +15,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
+		<ClientRouter />
 		<style>
 			main {
 				width: calc(100% - 2em);
@@ -53,33 +56,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			.last-updated-on {
 				font-style: italic;
 			}
-
-			#contents {
-				list-style: "- ";
-				margin: 0;
-			}
-
-			@media screen and (min-width: 1640px) {
-				.contents-wrapper {
-					display: block;
-					position: fixed;
-					left: 0;
-					top: 10rem;
-					overflow-y: auto;
-					max-height: calc(100dvh - 14rem);
-				}
-			}
-
-			.contents-header {
-				margin: 0;
-			}
-
-			.contents-wrapper {
-				border-top: 1px dashed #aaa;
-				border-bottom: 1px dashed #aaa;
-				padding: 1rem;
-				width: fit-content;
-			}
 		</style>
 	</head>
 
@@ -115,94 +91,11 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 						<h1>{title}</h1>
 						<hr />
 					</div>
-					<div class="contents-wrapper">
-						<p class="contents-header">Contents</p>
-						<ul id="contents"></ul>
-					</div>
+					<LoadContents />
 					<slot />
 				</div>
 			</article>
 		</main>
 		<Footer />
-		<script defer>
-			function getClass(h) {
-				switch (h) {
-					case "h2":
-						return "";
-					case "h3":
-						return "h-three";
-					case "h4":
-						return "h-four";
-					case "h5":
-						return "h-five";
-					case "h6":
-						return "h-six";
-				}
-			}
-
-			function processHeaders() {
-				const contents = document.getElementById("contents");
-				const headerList = [];
-				const elementList = [];
-				function linkHeader(h) {
-					document.querySelectorAll(h).forEach((heading) => {
-						elementList.push(heading);
-						const slug = String(heading.innerText)
-							.toLowerCase()
-							.replaceAll(" ", "-")
-							.replaceAll("?", "")
-							.replaceAll(".", "")
-							.replaceAll("!", "")
-							.replaceAll(",", "-")
-							.replaceAll(":", "");
-						const text = heading.innerText;
-						heading.innerHTML = `<a href="#${slug}" id="${slug}">#${text}</a>`;
-						headerList.push({
-							header: heading.localName,
-							slug: slug,
-							text: text.replaceAll(":", ""),
-						});
-					});
-				}
-				linkHeader("h2, h3, h4, h5, h6");
-				headerList.forEach((header) => {
-					contents.innerHTML += `<li class="${getClass(header.header)}"><a href="#${header.slug}" class="contents-item">${header.text}</a></li>`;
-				});
-				return elementList;
-			}
-
-			let headerList = processHeaders();
-			const generatedContentItem = document.querySelectorAll(".contents-item");
-			generatedContentItem.forEach((el) => {
-				el.classList.remove("active");
-			});
-
-			const options = {
-				root: null,
-				rootMargin: "-50% 0px -40% 0px",
-				threshold: 0.8,
-			};
-
-			const handleObserver = (entries, observer) => {
-				entries.forEach((entry) => {
-					if (!entries[0].isIntersecting) {
-						document.querySelector(".active").classList.remove("active");
-					}
-					generatedContentItem.forEach((el) => {
-						el.classList.remove("active");
-						if (el.innerText === entry.target.innerText.replace("#", "")) {
-							el.classList.add("active");
-						} else {
-							el.classList.remove("active");
-						}
-					});
-				});
-			};
-			const observer = new IntersectionObserver(handleObserver, options);
-
-			headerList.forEach((el) => {
-				observer.observe(el);
-			});
-		</script>
 	</body>
 </html>

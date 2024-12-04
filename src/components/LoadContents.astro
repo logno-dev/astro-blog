@@ -1,0 +1,125 @@
+---
+
+---
+
+<style>
+	#contents {
+		list-style: "- ";
+		margin: 0;
+	}
+
+	@media screen and (min-width: 1640px) {
+		.contents-wrapper {
+			display: block;
+			position: fixed;
+			left: 0;
+			top: 10rem;
+			overflow-y: auto;
+			max-height: calc(100dvh - 14rem);
+		}
+	}
+
+	.contents-header {
+		margin: 0;
+	}
+
+	.contents-wrapper {
+		border-top: 1px dashed #aaa;
+		border-bottom: 1px dashed #aaa;
+		padding: 1rem;
+		width: fit-content;
+	}
+</style>
+<div class="contents-wrapper">
+	<p class="contents-header">Contents</p>
+	<ul id="contents"></ul>
+</div>
+
+<script>
+	type HeaderItem = {
+		header: string;
+		slug: string;
+		text: string;
+	};
+	function getClass(h: string) {
+		switch (h) {
+			case "h2":
+				return "";
+			case "h3":
+				return "h-three";
+			case "h4":
+				return "h-four";
+			case "h5":
+				return "h-five";
+			case "h6":
+				return "h-six";
+		}
+	}
+
+	function processHeaders() {
+		const contents = document.getElementById("contents");
+		const headerList: HeaderItem[] = [];
+		const elementList: HTMLElement[] = [];
+		function linkHeader(h: string) {
+			const elements: NodeListOf<HTMLElement> = document.querySelectorAll(h);
+			elements.forEach((heading) => {
+				elementList.push(heading);
+				const slug = String(heading.innerText)
+					.toLowerCase()
+					.replaceAll(" ", "-")
+					.replaceAll("?", "")
+					.replaceAll(".", "")
+					.replaceAll("!", "")
+					.replaceAll(",", "-")
+					.replaceAll(":", "");
+				const text = heading.innerText;
+				heading.innerHTML = `<a href="#${slug}" id="${slug}">#${text}</a>`;
+				headerList.push({
+					header: heading.localName,
+					slug: slug,
+					text: text.replaceAll(":", ""),
+				});
+			});
+		}
+		linkHeader("h2, h3, h4, h5, h6");
+		headerList.forEach((header) => {
+			if (contents) {
+				contents.innerHTML += `<li class="${getClass(header.header)}"><a href="#${header.slug}" class="contents-item">${header.text}</a></li>`;
+			}
+		});
+		return elementList;
+	}
+
+	document.addEventListener("astro:page-load", () => {
+		let headerList = processHeaders();
+		const generatedContentItem: NodeListOf<HTMLElement> =
+			document.querySelectorAll(".contents-item");
+
+		const options = {
+			root: null,
+			rootMargin: "-40% 0px -40% 0px",
+			threshold: 0.8,
+		};
+
+		const handleObserver = (entries, observer) => {
+			entries.forEach((entry: any) => {
+				generatedContentItem.forEach((el) => {
+					el.classList.remove("active");
+					if (el.innerText === entry.target.innerText.replace("#", "")) {
+						el.classList.add("active");
+					} else {
+						el.classList.remove("active");
+					}
+				});
+			});
+		};
+		const observer = new IntersectionObserver(handleObserver, options);
+
+		headerList.forEach((el) => {
+			observer.observe(el);
+		});
+		generatedContentItem.forEach((el) => {
+			el.classList.remove("active");
+		});
+	});
+</script>
