@@ -34,7 +34,7 @@
 }
 
 body {
-  font-family: "Atkinson", sans-serif;
+  font-family: monospace;
   margin: 0;
   padding: 0;
   text-align: left;
